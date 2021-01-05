@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "*": [
+                "types/*"
+            ],
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "types": [
+            "node"
+        ],
+        "sourceMap": false,
+        "jsx": "react",
+        "strict": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "rootDir": "./",
+        "baseUrl": "./",
+        "skipLibCheck": true,
+        "declaration": true,
+        "noEmitOnError": false,
+        "emitDeclarationOnly": true,
+        "outDir": ".tmp"
+    },
+    "exclude": [
+        ".tmp",
+        "node_modules"
+    ]
+}
