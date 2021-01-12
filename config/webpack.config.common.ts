@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import ESLintPlugin from "eslint-webpack-plugin";
 import webpack from 'webpack';
+import HtmlWebpackTagsPlugin from 'html-webpack-tags-plugin';
 
 const isDevelopment = process.env.NODE_ENV === "development";
 

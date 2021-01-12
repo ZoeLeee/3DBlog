@@ -1,14 +1,22 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Intent } from "@blueprintjs/core";
+import { viewer } from '.';
+
 
 export default () => {
+    const ref = useRef(null);
+
+    useEffect(() => {
+
+
+    }, []);
+
     return (
-        <div>
-            <Button
-                text="text"
-                intent={Intent.SUCCESS}
-            />
-        </div>
+        <>
+            <div id="main" ref={ref}>
+
+            </div>
+        </>
     );
 };

@@ -10,13 +10,13 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:5000",
             "webRoot": "${workspaceFolder}",
-            "sourceMapPathOverrides": {
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///src/*": "${webRoot}/*",
-                "meteor://💻app/*": "${webRoot}/*"
-            }
+            // "sourceMapPathOverrides": {
+            //     "webpack:///./~/*": "${webRoot}/node_modules/*",
+            //     "webpack:///./*": "${webRoot}/*",
+            //     "webpack:///*": "*",
+            //     "webpack:///src/*": "${webRoot}/*",
+            //     "meteor://💻app/*": "${webRoot}/*"
+            // }
         }
     ]
 }
