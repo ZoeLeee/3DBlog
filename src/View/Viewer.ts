@@ -1,5 +1,5 @@
 import { CDN_URL } from "@/utils/Host";
-import { AmbientLight, AxesHelper, Color, DataTexture, DirectionalLight, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, OrthographicCamera, PerspectiveCamera, PlaneBufferGeometry, PointLight, ReinhardToneMapping, Scene, Texture, TextureDataType, UnsignedByteType, Vector2, Vector3, WebGLRenderer } from "three";
+import { AmbientLight, AxesHelper, BufferGeometry, Color, DataTexture, DirectionalLight, Mesh, MeshBasicMaterial, MeshNormalMaterial, MeshPhysicalMaterial, OrthographicCamera, PerspectiveCamera, PlaneBufferGeometry, PointLight, ReinhardToneMapping, Scene, Shader, ShaderMaterial, Texture, TextureDataType, UnsignedByteType, Vector2, Vector3, WebGLRenderer } from "three";
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
@@ -25,12 +25,14 @@ export class Viewer {
         }
     );
     private _Scene = new Scene();
-    private _Camera: PerspectiveCamera;
+    _Camera: PerspectiveCamera;
     private _Width: number;
     private _Height: number;
     private _container: HTMLElement;
     private frontlight = new DirectionalLight(16711680, .5);
     private backlight = new DirectionalLight(65280, .5);
+    Shaders: Shader[] = [];
+    needUpdate = true;
     constructor(container: HTMLElement) {
         this._Width = container.clientWidth;
         this._Height = container.clientHeight;
@@ -119,11 +121,62 @@ export class Viewer {
                         break;
                 }
                 if (!url) continue;
+                var e = o.geometry as BufferGeometry;
+                e.setAttribute("uv2", e.getAttribute("uv").clone());
                 let texture = await LoadHDR(url);
-                if (texture)
-                    o.material = new MeshPhysicalMaterial({ map: texture });
+                if (texture) {
+                    o.material = new MeshBasicMaterial({
+                        //@ts-ignore
+                        lightMap: texture,
+                        lightMapIntensity: 1,
+                        dithering: true,
+                        color: new Color(2241341)
+                    });
+                    o.material.onBeforeCompile = (shader: Shader) => {
+                        shader.uniforms.progress = {
+                            value: 10
+                        };
+                        shader.uniforms.colorDest = {
+                            value: new Color(2241341)
+                        };
+                        shader.uniforms.center = {
+                            value: new Vector3(1.04, .968, .35)
+                        };
+
+                        shader.vertexShader = "varying vec4 vMvPosition;\n" + shader.vertexShader;
+                        shader.vertexShader = shader.vertexShader.replace(
+                            "#include <project_vertex>",
+                            `
+                                vec4 mvPosition = vec4( transformed, 1.0 );
+                                mvPosition = modelViewMatrix * mvPosition;
+                                vMvPosition = vec4( transformed, 1.0 ) * modelMatrix;
+                                gl_Position = projectionMatrix * mvPosition;
+                            `
+                        );
+
+                        shader.fragmentShader = `
+                                                    uniform float progress;
+                                                    uniform vec3 colorDest;
+                                                    uniform vec3 center;
+                                                    varying vec4 vMvPosition;` + shader.fragmentShader;
+
+                        let fsShader = `
+                                                    float edge = 0.001;
+                                                    float gradient = 0.01;
+                                                    float d = distance(vMvPosition.xyz, center);
+                                                    float t = progress * 5.674;
+                                                    float frontiere = step(t, d);
+                                                    float circle = 1.0 + smoothstep(t,t + gradient, d) - smoothstep(t - gradient, t, d);
+                                                    vec4 diffuseColor = mix(vec4(vec3(4.0), 1.0),vec4( mix(colorDest, diffuse, frontiere), opacity ), circle);
+                                                    `;
+                        shader.fragmentShader = shader.fragmentShader.replace("vec4 diffuseColor = vec4( diffuse, opacity );", fsShader);
+
+                        this.Shaders.push(shader);
+                    };
+                }
             }
             this.Scene.add(group);
+            this.Update();
         });
     }
     OnSize(width?: number, height?: number) {
@@ -137,7 +190,7 @@ export class Viewer {
             this._Height -= 1;
 
         this.Renderer.setSize(this._Width, this._Height);
-
+        this._Camera.aspect = this._Width / this._Height;
         this._Camera.updateProjectionMatrix();
     }
     StartRender = () => {
@@ -145,6 +198,12 @@ export class Viewer {
         this.Render();
     };
     Render() {
+        // if (!this.needUpdate)
+        //     return;
+        // this.needUpdate = false;
         this.Renderer.render(this._Scene, this._Camera);
+    }
+    Update() {
+        this.needUpdate = true;
     }
 }

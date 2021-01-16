@@ -17,7 +17,7 @@
         "types": [
             "node"
         ],
-        "sourceMap": false,
+        "sourceMap": true,
         "jsx": "react",
         "strict": true,
         "moduleResolution": "node",

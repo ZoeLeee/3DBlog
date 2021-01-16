@@ -7,6 +7,7 @@ import commonConfig from "./webpack.config.common";
 
 const config: Configuration = merge(commonConfig, {
   mode: "development",
+  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
     port: 5000,

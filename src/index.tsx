@@ -4,9 +4,10 @@ import App from "./App";
 import './styles/index.less';
 import { Viewer } from "./View/Viewer";
 import { BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Blog } from "./View/Main";
 
 export let viewer: Viewer;
-
+export let blog: Blog;
 window.onresize = () => {
     if (viewer)
         viewer.OnSize();
@@ -17,9 +18,6 @@ ReactDOM.render(<App />, document.getElementById("root"), () => {
     if (el)
         viewer = new Viewer(el);
     if (viewer) {
-        const geometry = new BoxGeometry(100, 100, 100);
-        const material = new MeshBasicMaterial({ color: 0x00ff00 });
-        const cube = new Mesh(geometry, material);
-        // viewer.Scene.add(cube);
+        blog = new Blog(viewer);
     }
 });
