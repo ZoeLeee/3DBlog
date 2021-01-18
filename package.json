@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "start": "webpack serve --config ./config/webpack.config.dev.ts",
-    "build": "webpack-cli --config ./config/webpack.config.prod.ts --progress --colors",
+    "build": "webpack --config ./config/webpack.config.prod.ts ",
     "test": "tsc --incremental --diagnostics -p tsconfig.json"
   },
   "repository": {
@@ -26,7 +26,6 @@
     "@blueprintjs/core": "^3.36.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "ahooks": "^2.9.3",
     "html-webpack-tags-plugin": "^2.0.17",
     "loadash": "^1.0.0",
     "lodash-es": "^4.17.20",
@@ -36,7 +35,8 @@
     "react-router-dom": "^5.2.0",
     "three": "^0.124.0",
     "unstated-next": "^1.1.0",
-    "use-immer": "^0.4.2"
+    "use-immer": "^0.4.2",
+    "webpackbar": "^5.0.0-3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

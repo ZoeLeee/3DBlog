@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import ESLintPlugin from "eslint-webpack-plugin";
 import webpack from 'webpack';
-import HtmlWebpackTagsPlugin from 'html-webpack-tags-plugin';
+import WebpackBar from 'webpackbar';
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -58,7 +58,8 @@ const config: Configuration = {
     new webpack.DefinePlugin({
       "process.env": "{}",
       global: {}
-    })
+    }),
+    new WebpackBar({}),
   ],
 };
 

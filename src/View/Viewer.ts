@@ -1,10 +1,9 @@
 import { CDN_URL } from "@/utils/Host";
-import { AmbientLight, AxesHelper, BufferGeometry, Color, DataTexture, DirectionalLight, Mesh, MeshBasicMaterial, MeshNormalMaterial, MeshPhysicalMaterial, OrthographicCamera, PerspectiveCamera, PlaneBufferGeometry, PointLight, ReinhardToneMapping, Scene, Shader, ShaderMaterial, Texture, TextureDataType, UnsignedByteType, Vector2, Vector3, WebGLRenderer } from "three";
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { LoadHDR } from "@/utils/Loader";
+import { AmbientLight, AxesHelper, BufferGeometry, Color, DirectionalLight, Mesh, MeshBasicMaterial, PerspectiveCamera, ReinhardToneMapping, Scene, Shader, Vector3, WebGLRenderer } from "three";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const CDNHOST = "https://cdn.jsdelivr.net/gh/ZoeLeee/cdn/";
 
