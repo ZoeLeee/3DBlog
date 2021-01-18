@@ -108,7 +108,7 @@ export class Viewer {
                         url = CDN_URL + "Desk.Drawers_baked.hdr";
                         break;
                     case "DeskHandles":
-                        url = "http://cdn3.dodream.top/Desk.Handles_baked.hdr?key=joelee";
+                        url = CDN_URL + "Desk.Handles_baked.hdr";
                         break;
                     case "DeskTable":
                         url = CDN_URL + "Desk.Table_baked.hdr";
