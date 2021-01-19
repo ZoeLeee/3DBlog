@@ -1,4 +1,4 @@
-import { Color, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, Raycaster } from "three";
+import { Color, Mesh, MeshBasicMaterial, Raycaster, VideoTexture } from "three";
 import { viewer } from "..";
 import { Viewer } from "./Viewer";
 
@@ -80,6 +80,7 @@ export class Blog {
         x: 0, y: 0
     };
     private _timeer: NodeJS.Timeout;
+    private isPlaying = false;
     constructor(private viewer: Viewer) {
         this.register();
     }
@@ -130,8 +131,26 @@ export class Blog {
                     this._currentIndex = 0;
                 this.Update();
                 break;
+            case "Mouse":
+                this.play();
+                break;
         }
     };
+    play() {
+        const video = document.getElementById('video') as HTMLVideoElement;
+        video.volume = 0.1;
+        if (this.isPlaying) {
+            video.pause();
+            this.isPlaying = false;
+        }
+        else {
+            video.play();
+            this.isPlaying = true;
+            const texture = new VideoTexture(video);
+            this.viewer.Screen.material = new MeshBasicMaterial({ map: texture, color: 0xffffff });
+        }
+
+    }
     Update() {
         let currentScene = SceenList[this._currentIndex];
         (this.viewer.Scene.background as Color).set(currentScene.background);

@@ -32,6 +32,7 @@ export class Viewer {
     private backlight = new DirectionalLight(65280, .5);
     Shaders: Shader[] = [];
     needUpdate = true;
+    Screen: Mesh;
     constructor(container: HTMLElement) {
         this._Width = container.clientWidth;
         this._Height = container.clientHeight;
@@ -115,6 +116,16 @@ export class Viewer {
                         break;
                     case "ScreenFrame":
                         url = CDN_URL + "Screen.Frame_baked.hdr";
+                        break;
+                    case "Screen":
+                        this.Screen = o;
+                        const buffer = o.geometry as BufferGeometry;
+                        const uv = buffer.attributes.uv;
+                        for (let i = 0; i < uv.count; i++) {
+                            let x = uv.getX(i);
+                            let y = uv.getY(i);
+                            uv.setXY(i, y, x);
+                        }
                         break;
                     default:
                         break;

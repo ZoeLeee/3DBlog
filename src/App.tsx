@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Button, Intent } from "@blueprintjs/core";
-import { viewer } from '.';
+import { CDN_VIDEO_URL } from './utils/Host';
 
 
 export default () => {
@@ -17,6 +16,10 @@ export default () => {
             <div id="main" ref={ref}>
 
             </div>
+            <video id="video" loop={false} crossOrigin="anonymous" playsInline style={{ display: "none" }}>
+                <source src={CDN_VIDEO_URL + "sintel.ogv"} type='video/ogg; codecs="theora, vorbis"' />
+                <source src={CDN_VIDEO_URL + "sintel.mp4"} type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+            </video>
         </>
     );
 };
