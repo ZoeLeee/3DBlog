@@ -185,6 +185,7 @@ export class Viewer {
                     };
                 }
             }
+            group.position.setY(-1.25);
             this.Scene.add(group);
             this.Update();
         });

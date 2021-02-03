@@ -2,7 +2,6 @@ import webpack from "webpack";
 import { Configuration } from "webpack-dev-server";
 import merge from "webpack-merge";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import path from "path";
 import commonConfig from "./webpack.config.common";
 
 const config: Configuration = merge(commonConfig, {
@@ -10,7 +9,7 @@ const config: Configuration = merge(commonConfig, {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    port: 5000,
+    port: 8080,
     compress: true,
     hot: true,
   },
