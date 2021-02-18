@@ -53,7 +53,7 @@ export class Viewer {
 
         this.StartRender();
 
-        let control = new OrbitControls(this._Camera, this.Renderer.domElement);
+        // let control = new OrbitControls(this._Camera, this.Renderer.domElement);
 
         //@ts-ignore
         window["viewer"] = this;
@@ -92,8 +92,8 @@ export class Viewer {
     }
     InitCamera() {
         this._Camera = new PerspectiveCamera(35, this._Width / this._Height, 0.1, 100);
-        this._Camera.position.copy(new Vector3(0, 2, 3.3131));
-        this._Camera.lookAt(0, .6, 0);
+        this._Camera.position.copy(new Vector3(-0, 0.2, 2.5));
+        this._Camera.lookAt(0, 0, 0);
     }
     InitScene() {
         this._Scene.background = new Color(3359822);
@@ -118,6 +118,7 @@ export class Viewer {
                         url = CDN_URL + "Screen.Frame_baked.hdr";
                         break;
                     case "Screen":
+                        //TODO:轮播项目和文章图片，鼠标移入停止
                         this.Screen = o;
                         const buffer = o.geometry as BufferGeometry;
                         const uv = buffer.attributes.uv;
