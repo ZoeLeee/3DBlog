@@ -19,7 +19,7 @@ interface IArticle {
     sscanCount: number;
 }
 
-const DEFAULT_PREVIEW=["zd01.jpg","zd02.jpg","banner.jpg","banner01.jpg","banner02.jpg","banner03.jpg"]
+ const DEFAULT_PREVIEW=["zd01.jpg","zd02.jpg","banner.jpg","banner01.jpg","banner02.jpg","banner03.jpg"]
 
 
 const Content: React.FunctionComponent<IContentProps> = (props) => {

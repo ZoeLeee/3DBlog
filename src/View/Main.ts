@@ -1,5 +1,4 @@
 import { Color, Mesh, MeshBasicMaterial, Raycaster, VideoTexture } from "three";
-import { viewer } from "..";
 import { Viewer } from "./Viewer";
 
 const CanSelectNames = [
@@ -86,11 +85,12 @@ export class Blog {
     }
     register() {
         window.addEventListener('mousemove', e => this.onMouseMove(e), false);
-        viewer.Renderer.domElement.addEventListener('click', this.onMouseDown, false);
+        this.viewer.Renderer.domElement.addEventListener('click', this.onMouseDown, false);
         window.addEventListener("resize", () => {
             this.viewer.OnSize();
         });
     }
+
     onMouseMove(event: MouseEvent) {
 
         if (this.currentObject) {

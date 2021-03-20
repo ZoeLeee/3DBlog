@@ -42,3 +42,9 @@ export function formateDate(d: Date | number, fmt: string = "yyyy-MM-dd") {
 export function randomNum(min: number, max: number) {
     return Math.floor(Math.random()*(max-min+1)+min);
 }
+
+export function sleep(t:number){
+    return new Promise(res=>{
+        setTimeout(res, t*1000);
+    })
+}

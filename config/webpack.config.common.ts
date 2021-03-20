@@ -4,6 +4,7 @@ import path from "path";
 import ESLintPlugin from "eslint-webpack-plugin";
 import webpack from 'webpack';
 import WebpackBar from 'webpackbar';
+import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin';
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -60,6 +61,20 @@ const config: Configuration = {
       template: "./public/index.html",
       favicon: "./public/favicon.ico",
     }),
+    new AddAssetHtmlPlugin([
+      {
+        filepath: require.resolve('../node_modules/normalize.css/normalize.css'),
+        typeOfAsset: "css"
+      },
+      {
+        filepath: require.resolve('../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css'),
+        typeOfAsset: "css"
+      },
+      {
+        filepath: require.resolve('../node_modules/@blueprintjs/core/lib/css/blueprint.css'),
+        typeOfAsset: "css"
+      }
+    ]),
     new ESLintPlugin({
       fix: true,
       lintDirtyModulesOnly: true,

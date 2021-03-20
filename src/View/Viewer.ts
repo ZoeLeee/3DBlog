@@ -1,11 +1,14 @@
-import { CDN_URL } from "@/utils/Host";
+import { CDN_IMG_URL, CDN_URL } from "@/utils/Host";
 import { LoadHDR } from "@/utils/Loader";
-import { AmbientLight, AxesHelper, BufferGeometry, Color, DirectionalLight, Mesh, MeshBasicMaterial, PerspectiveCamera, ReinhardToneMapping, Scene, Shader, Vector3, WebGLRenderer } from "three";
+import { sleep } from "@/utils/Utiles";
+import { AmbientLight, AxesHelper, BufferGeometry, Color, DirectionalLight, Mesh, MeshBasicMaterial, PerspectiveCamera, ReinhardToneMapping, Scene, Shader, TextureLoader, Vector3, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const CDNHOST = "https://cdn.jsdelivr.net/gh/ZoeLeee/cdn/";
+
+const PREVIEWs=["zd01.jpg","zd02.jpg","banner.jpg","banner01.jpg","banner02.jpg","banner03.jpg"];
 
 const gtlfLoader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -33,6 +36,7 @@ export class Viewer {
     Shaders: Shader[] = [];
     needUpdate = true;
     Screen: Mesh;
+    private defaultMaterial:MeshBasicMaterial=new MeshBasicMaterial();
     constructor(container: HTMLElement) {
         this._Width = container.clientWidth;
         this._Height = container.clientHeight;
@@ -188,8 +192,17 @@ export class Viewer {
             }
             group.position.setY(-1.25);
             this.Scene.add(group);
+            this.do([])
             this.Update();
         });
+    }
+    async do(data:any[]){
+        this.Screen.material=this.defaultMaterial;
+        for(let img of PREVIEWs){
+            let texture=new TextureLoader().load(CDN_IMG_URL+img);
+            this.defaultMaterial.map=texture;
+            await sleep(1);
+        }
     }
     OnSize(width?: number, height?: number) {
         this._Width = width ?? this._container.clientWidth;
